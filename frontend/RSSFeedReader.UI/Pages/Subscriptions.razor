@@ -1,0 +1,70 @@
+@page "/"
+@inject SubscriptionsClient SubscriptionsClient
+
+<PageTitle>Subscriptions</PageTitle>
+
+<h1>Subscriptions</h1>
+
+<EditForm Model="formModel" OnValidSubmit="AddSubscriptionAsync" FormName="subscription-form">
+    <div class="mb-3">
+        <label for="subscription-url" class="form-label">Feed URL</label>
+        <InputText id="subscription-url" class="form-control" @bind-Value="formModel.Url" />
+    </div>
+    <button type="submit" class="btn btn-primary">Add subscription</button>
+</EditForm>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p class="text-danger" role="alert">@errorMessage</p>
+}
+
+<h2 class="mt-4">Your subscriptions</h2>
+
+@if (subscriptions.Count == 0)
+{
+    <p>No subscriptions added yet.</p>
+}
+else
+{
+    <ol>
+        @foreach (var subscription in subscriptions)
+        {
+            <li>@subscription.Url</li>
+        }
+    </ol>
+}
+
+@code {
+    private readonly List<SubscriptionItem> subscriptions = [];
+    private readonly SubscriptionFormModel formModel = new();
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        subscriptions.AddRange(await SubscriptionsClient.GetSubscriptionsAsync());
+    }
+
+    private async Task AddSubscriptionAsync()
+    {
+        errorMessage = null;
+        if (string.IsNullOrWhiteSpace(formModel.Url))
+        {
+            errorMessage = "Enter a subscription URL.";
+            return;
+        }
+
+        if (await SubscriptionsClient.AddSubscriptionAsync(formModel.Url))
+        {
+            subscriptions.Add(new SubscriptionItem(formModel.Url.Trim()));
+            formModel.Url = string.Empty;
+            return;
+        }
+
+        errorMessage = "The subscription could not be added.";
+    }
+
+    private sealed class SubscriptionFormModel
+    {
+        public string Url { get; set; } = string.Empty;
+    }
+}

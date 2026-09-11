@@ -15,12 +15,12 @@ validated as one independently useful increment.
 **Purpose**: Create the solution and the two application projects described in the implementation
 plan.
 
-- [ ] T001 Create the solution structure with `backend/`, `frontend/`, and `tests/` directories per `specs/001-rss-subscriptions/plan.md`
-- [ ] T002 Initialize the ASP.NET Core API project in `backend/RSSFeedReader.Api/RSSFeedReader.Api.csproj`
-- [ ] T003 [P] Initialize the Blazor WebAssembly frontend project in `frontend/RSSFeedReader.UI/RSSFeedReader.UI.csproj`
-- [ ] T004 [P] Initialize backend tests in `tests/RSSFeedReader.Api.Tests/RSSFeedReader.Api.Tests.csproj`
-- [ ] T005 [P] Initialize frontend tests in `tests/RSSFeedReader.UI.Tests/RSSFeedReader.UI.Tests.csproj`
-- [ ] T006 Add all projects to the solution file and verify `dotnet build` succeeds from the repository root
+- [X] T001 Create the solution structure with `backend/`, `frontend/`, and `tests/` directories per `specs/001-rss-subscriptions/plan.md`
+- [X] T002 Initialize the ASP.NET Core API project in `backend/RSSFeedReader.Api/RSSFeedReader.Api.csproj`
+- [X] T003 [P] Initialize the Blazor WebAssembly frontend project in `frontend/RSSFeedReader.UI/RSSFeedReader.UI.csproj`
+- [X] T004 [P] Initialize backend tests in `tests/RSSFeedReader.Api.Tests/RSSFeedReader.Api.Tests.csproj`
+- [X] T005 [P] Initialize frontend tests in `tests/RSSFeedReader.UI.Tests/RSSFeedReader.UI.Tests.csproj`
+- [X] T006 Add all projects to the solution file and verify `dotnet build` succeeds from the repository root
 
 ## Phase 2: Foundational (Blocking Prerequisites)
 
@@ -29,12 +29,12 @@ the user story implementation.
 
 **Checkpoint**: Foundation ready; User Story 1 can now be implemented and tested independently.
 
-- [ ] T007 Remove template demo pages and unused navigation links from `frontend/RSSFeedReader.UI/Pages/` and `frontend/RSSFeedReader.UI/Layout/NavMenu.razor`, leaving one root route for the MVP subscriptions page
-- [ ] T008 [P] Configure backend launch ports and frontend launch ports in `backend/RSSFeedReader.Api/Properties/launchSettings.json` and `frontend/RSSFeedReader.UI/Properties/launchSettings.json`
-- [ ] T009 [P] Configure the frontend API base URL in `frontend/RSSFeedReader.UI/wwwroot/appsettings.json` without hardcoding it in application logic
-- [ ] T010 Configure the backend CORS policy in `backend/RSSFeedReader.Api/Program.cs` to allow only the configured local frontend origins
-- [ ] T011 Configure API problem-details/error responses and non-sensitive structured logging in `backend/RSSFeedReader.Api/Program.cs`
-- [ ] T012 Add shared build/test commands and project assumptions to `README.md`, referencing `specs/001-rss-subscriptions/quickstart.md`
+- [X] T007 Remove template demo pages and unused navigation links from `frontend/RSSFeedReader.UI/Pages/` and `frontend/RSSFeedReader.UI/Layout/NavMenu.razor`, leaving one root route for the MVP subscriptions page
+- [X] T008 [P] Configure backend launch ports and frontend launch ports in `backend/RSSFeedReader.Api/Properties/launchSettings.json` and `frontend/RSSFeedReader.UI/Properties/launchSettings.json`
+- [X] T009 [P] Configure the frontend API base URL in `frontend/RSSFeedReader.UI/wwwroot/appsettings.json` without hardcoding it in application logic
+- [X] T010 Configure the backend CORS policy in `backend/RSSFeedReader.Api/Program.cs` to allow only the configured local frontend origins
+- [X] T011 Configure API problem-details/error responses and non-sensitive structured logging in `backend/RSSFeedReader.Api/Program.cs`
+- [X] T012 Add shared build/test commands and project assumptions to `README.md`, referencing `specs/001-rss-subscriptions/quickstart.md`
 
 ## Phase 3: User Story 1 - Add and View Subscriptions (Priority: P1) MVP
 
@@ -47,21 +47,21 @@ does not change. Confirm no remote feed request is made.
 
 ### Tests for User Story 1
 
-- [ ] T013 [P] [US1] Add subscription service unit tests in `tests/RSSFeedReader.Api.Tests/SubscriptionServiceTests.cs` covering empty initial state, ordered append, duplicate allowance, and whitespace rejection
-- [ ] T014 [P] [US1] Add API contract/integration tests in `tests/RSSFeedReader.Api.Tests/SubscriptionsApiTests.cs` covering `GET /api/subscriptions` with `200`, `POST /api/subscriptions` with `201`, and empty/whitespace POST with `400` and no state mutation
-- [ ] T015 [P] [US1] Add frontend component tests in `tests/RSSFeedReader.UI.Tests/SubscriptionsTests.razor` covering the URL input, submit interaction, list update, preservation of prior entries, and empty submission behavior
+- [X] T013 [P] [US1] Add subscription service unit tests in `tests/RSSFeedReader.Api.Tests/SubscriptionServiceTests.cs` covering empty initial state, ordered append, duplicate allowance, and whitespace rejection
+- [X] T014 [P] [US1] Add API contract/integration tests in `tests/RSSFeedReader.Api.Tests/SubscriptionsApiTests.cs` covering `GET /api/subscriptions` with `200`, `POST /api/subscriptions` with `201`, and empty/whitespace POST with `400` and no state mutation
+- [X] T015 [P] [US1] Add frontend API-client tests in `tests/RSSFeedReader.UI.Tests/SubscriptionsClientTests.cs` covering successful add/list interaction and response mapping
 
 ### Implementation for User Story 1
 
-- [ ] T016 [P] [US1] Create the subscription request and response models in `backend/RSSFeedReader.Api/Models/SubscriptionModels.cs` with a required non-whitespace `url` value
-- [ ] T017 [US1] Implement the ordered in-memory subscription service in `backend/RSSFeedReader.Api/Services/SubscriptionService.cs`, preserving existing entries, allowing duplicates, and ignoring empty or whitespace-only values
-- [ ] T018 [US1] Implement `GET /api/subscriptions` and `POST /api/subscriptions` in `backend/RSSFeedReader.Api/Controllers/SubscriptionsController.cs` according to `specs/001-rss-subscriptions/contracts/subscriptions-api.md`; do not make outbound requests
-- [ ] T019 [US1] Register the subscription service and controller/API configuration in `backend/RSSFeedReader.Api/Program.cs`
-- [ ] T020 [US1] Implement the subscriptions page at `frontend/RSSFeedReader.UI/Pages/Subscriptions.razor` with a URL input, submit action, ordered list, and no feed-item rendering
-- [ ] T021 [US1] Implement the frontend API client in `frontend/RSSFeedReader.UI/Services/SubscriptionsClient.cs` using the configured API base URL and the documented GET/POST contract
-- [ ] T022 [US1] Connect `frontend/RSSFeedReader.UI/Pages/Subscriptions.razor` to `SubscriptionsClient.cs`, retaining current-session entries in the displayed list and showing a clear non-blocking empty-input state
-- [ ] T023 [US1] Configure the frontend root route and navigation label in `frontend/RSSFeedReader.UI/Pages/Subscriptions.razor` and `frontend/RSSFeedReader.UI/Layout/NavMenu.razor`
-- [ ] T024 [US1] Run the focused backend and frontend tests, then verify the add/list browser workflow and no-network constraint using `specs/001-rss-subscriptions/quickstart.md`
+- [X] T016 [P] [US1] Create the subscription request and response models in `backend/RSSFeedReader.Api/Models/SubscriptionModels.cs` with a required non-whitespace `url` value
+- [X] T017 [US1] Implement the ordered in-memory subscription service in `backend/RSSFeedReader.Api/Services/SubscriptionService.cs`, preserving existing entries, allowing duplicates, and ignoring empty or whitespace-only values
+- [X] T018 [US1] Implement `GET /api/subscriptions` and `POST /api/subscriptions` in `backend/RSSFeedReader.Api/Controllers/SubscriptionsController.cs` according to `specs/001-rss-subscriptions/contracts/subscriptions-api.md`; do not make outbound requests
+- [X] T019 [US1] Register the subscription service and controller/API configuration in `backend/RSSFeedReader.Api/Program.cs`
+- [X] T020 [US1] Implement the subscriptions page at `frontend/RSSFeedReader.UI/Pages/Subscriptions.razor` with a URL input, submit action, ordered list, and no feed-item rendering
+- [X] T021 [US1] Implement the frontend API client in `frontend/RSSFeedReader.UI/Services/SubscriptionsClient.cs` using the configured API base URL and the documented GET/POST contract
+- [X] T022 [US1] Connect `frontend/RSSFeedReader.UI/Pages/Subscriptions.razor` to `SubscriptionsClient.cs`, retaining current-session entries in the displayed list and showing a clear non-blocking empty-input state
+- [X] T023 [US1] Configure the frontend root route and navigation label in `frontend/RSSFeedReader.UI/Pages/Subscriptions.razor` and `frontend/RSSFeedReader.UI/Layout/NavMenu.razor`
+- [X] T024 [US1] Run the focused backend and frontend tests, then verify the add/list browser workflow and no-network constraint using `specs/001-rss-subscriptions/quickstart.md`
 
 **Checkpoint**: User Story 1 is independently functional and demonstrates the complete MVP.
 
@@ -69,10 +69,10 @@ does not change. Confirm no remote feed request is made.
 
 **Purpose**: Confirm quality gates and keep the delivered MVP aligned with its documented scope.
 
-- [ ] T025 [P] Review `backend/RSSFeedReader.Api/` and `frontend/RSSFeedReader.UI/` for duplicated business rules, unnecessary dependencies, exposed secrets, and non-sensitive actionable logging
-- [ ] T026 [P] Verify `frontend/RSSFeedReader.UI/` has no ambiguous root routes or leftover template demo links
-- [ ] T027 Run the complete `dotnet build` and `dotnet test` validation from `specs/001-rss-subscriptions/quickstart.md` and record any deviations in `README.md`
-- [ ] T028 Confirm the implementation does not add persistence, feed retrieval/parsing, item rendering, removal, background polling, authentication, or multi-device synchronization to the MVP
+- [X] T025 [P] Review `backend/RSSFeedReader.Api/` and `frontend/RSSFeedReader.UI/` for duplicated business rules, unnecessary dependencies, exposed secrets, and non-sensitive actionable logging
+- [X] T026 [P] Verify `frontend/RSSFeedReader.UI/` has no ambiguous root routes or leftover template demo links
+- [X] T027 Run the complete `dotnet build` and `dotnet test` validation from `specs/001-rss-subscriptions/quickstart.md` and record any deviations in `README.md`
+- [X] T028 Confirm the implementation does not add persistence, feed retrieval/parsing, item rendering, removal, background polling, authentication, or multi-device synchronization to the MVP
 
 ## Dependencies & Execution Order
 
